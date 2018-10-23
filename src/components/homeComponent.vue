@@ -1,10 +1,10 @@
 <template>
   <div id="box">
     <headComponent />
-    <swipeComponent />
+    <swipeComponent :banner="banner" />
     <cateComponent />
     <adComponent />
-    <listComponent />
+    <listComponent @moresoure="getmoresoure" :hotlist="hotlist" />
   </div>
 </template>
 <script>
@@ -20,6 +20,26 @@ import adComponent from './adbanner/adComponent'
 import headComponent from './header/headComponent'
 export default {
   name: 'homeComponent',
+  data () {
+    return {
+      banner: [],
+      hotlist: []
+    }
+  },
+  created () {
+    this.loadsoure()
+  },
+  methods: {
+    loadsoure () {
+      this.$http.post(this.URL.VIDEO_BANN_URI).then((res) => {
+        this.banner = res.data.banner
+        this.hotlist = this.hotlist.concat(res.data.list)
+      })
+    },
+    getmoresoure (list) {
+      this.hotlist = this.hotlist.concat(list)
+    }
+  },
   components: {
     swipeComponent,
     cateComponent,

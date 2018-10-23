@@ -5,45 +5,43 @@
       <span>最近更新</span>
     </div>
     <van-list class="clearfix vlist" v-model="loading" :finished="finished" @load="onLoad">
-      <van-cell @click="gotofunc(item)" class="cellitem" v-for="item in list" :key="item">
-        <div class="itembox">
-          <div class="imgbox"></div>
-          <div class="titlebox">我的妹妹不可能这么可爱</div>
-        </div>
-      </van-cell>
+      <cellitem class="cellitem" v-for="item in hotlist" :json="item" :key="item.vod_id"></cellitem>
     </van-list>
   </div>
 </template>
 <script>
+import cellitem from './cellitem'
 export default {
+  props: ['hotlist'],
   name: 'listComponent',
   data () {
     return {
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      page: 0
     }
   },
   methods: {
     onLoad () {
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
-        }
-        // 加载状态结束
-        this.loading = false
-        // 数据全部加载完成
-      }, 500)
-    },
-    gotofunc (item) {
-      console.log(item)
-      this.$router.push({
-        path: 'detil',
-        query: {
-          'type': item
+      this.page++
+      let obj = {
+        'page': this.page
+      }
+      this.$http.post(this.URL.VIDEO_HOTS_URI, this.$qs.stringify(obj)).then((res) => {
+        let data = res.data
+        if (data.code === 0) {
+          this.finished = true
+          this.loading = true
+        } else {
+          this.$emit('moresoure', data.data)
+          this.loading = false
         }
       })
     }
+  },
+  components: {
+    cellitem
   }
 }
 </script>
@@ -72,10 +70,10 @@ export default {
   .vlist{
     margin: 20px;
     .cellitem:nth-last-of-type(2n){
-      margin-left: 10px;
+      float: left;
     }
     .cellitem:nth-last-of-type(2n+1){
-      margin-right: 10px;
+      float: right;
     }
     .cellitem{
       display: block;
@@ -93,7 +91,6 @@ export default {
         .imgbox{
           display: block;
           height: 350px;
-          background-image: url('http://pic.xiaomingming.org/FileUpload/2679.jpg');
           background-position: center top;
           background-repeat: no-repeat;
           background-size: cover;

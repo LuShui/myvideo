@@ -5,12 +5,10 @@
     </div>
     <div class="playerbox">
       <div class="player">
-        <video src="https://vip888.kuyun99.com/20181001/vcOJX67E/index.m3u8"></video>
+        <video ref="player"></video>
       </div>
       <div class="list clearfix">
-        <div class="listli" v-for="n in 20" :key="n">
-          <a>第{{n+1}}集</a>
-        </div>
+        <itemplay class="listli" v-for="json in videolist" :key="json.index" :json="json"></itemplay>
       </div>
     </div>
     <div class="banner">
@@ -22,8 +20,50 @@
   </div>
 </template>
 <script>
+import itemplay from './itemplay'
 export default {
-  name: 'detilComponent'
+  name: 'detilComponent',
+  data () {
+    return {
+      videolist: []
+    }
+  },
+  mounted () {
+    let jsonstr = sessionStorage.getItem('detiljson')
+    if (jsonstr) {
+      this.videolist = JSON.parse(jsonstr)
+    } else {
+      let json = this.$route.params
+      let array = json.vod_play_url.split('#')
+      let videolist = []
+      array.forEach((element, i) => {
+        let arr = element.split('$')
+        let json = {
+          name: i + 1,
+          play: arr[1],
+          isplay: false,
+          index: i
+        }
+        videolist.push(json)
+      })
+      this.videolist = videolist
+      sessionStorage.setItem('detiljson', JSON.stringify(videolist))
+    }
+
+    if (this.videolist.length) {
+      this.startplay(this.videolist[0])
+    }
+  },
+  methods: {
+    startplay (json) {
+      let player = this.$refs.player
+      player.src = json.play
+      player.play()
+    }
+  },
+  components: {
+    itemplay
+  }
 }
 </script>
 <style lang="scss" scoped>
