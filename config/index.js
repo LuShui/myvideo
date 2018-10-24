@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://localhost/tp5/public/index.php',
+        target: 'http://localhost/tp5',
         secure: false,
         changeOrigin: true,
         pathRewrite: {

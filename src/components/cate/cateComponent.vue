@@ -38,7 +38,7 @@ export default {
           this.$router.push({
             path: 'cate',
             query: {
-              'type': 1
+              'type': '6,7,8,9,10,11,12'
             }
           })
           break
@@ -46,7 +46,7 @@ export default {
           this.$router.push({
             path: 'cate',
             query: {
-              'type': 2
+              'type': '24'
             }
           })
           break
@@ -54,7 +54,7 @@ export default {
           this.$router.push({
             path: 'cate',
             query: {
-              'type': 3
+              'type': '13,16,17,18,19,20,21,22,23,24,25,26'
             }
           })
           break

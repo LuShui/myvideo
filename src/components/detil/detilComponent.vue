@@ -34,6 +34,7 @@ export default {
       this.videolist = JSON.parse(jsonstr)
     } else {
       let json = this.$route.params
+      console.log(json)
       let array = json.vod_play_url.split('#')
       let videolist = []
       array.forEach((element, i) => {
@@ -63,6 +64,9 @@ export default {
   },
   components: {
     itemplay
+  },
+  destroyed () {
+    sessionStorage.setItem('detiljson', '')
   }
 }
 </script>

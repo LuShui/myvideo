@@ -1,36 +1,48 @@
 <template>
   <div class="list">
     <van-list class="clearfix vlist" v-model="loading" :finished="finished" @load="onLoad">
-      <van-cell class="cellitem" v-for="item in list" :key="item">
-        <div class="itembox">
+      <itemcell class="cellitem" v-for="item in list" :key="item.vod_id" :json="item">
+        <!-- <div class="itembox">
           <div class="imgbox"></div>
           <div class="titlebox">我的妹妹不可能这么可爱</div>
-        </div>
-      </van-cell>
+        </div> -->
+      </itemcell>
     </van-list>
   </div>
 </template>
 <script>
+import itemcell from './itemcell'
 export default {
   name: 'catelistComponent',
   data () {
     return {
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      page: 1
     }
   },
   methods: {
     onLoad () {
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
+      let obj = {
+        'cate': this.$route.query.type,
+        'page': this.page
+      }
+      this.page++
+      this.$http.post(this.URL.VIDEO_CATE_URI, this.$qs.stringify(obj)).then((res) => {
+        let data = res.data
+        if (data.code === 0) {
+          this.finished = true
+          this.loading = true
+        } else {
+          this.list = this.list.concat(data.data)
+          this.loading = false
         }
-        // 加载状态结束
-        this.loading = false
-        // 数据全部加载完成
-      }, 500)
+      })
     }
+  },
+  components: {
+    itemcell
   }
 }
 </script>
