@@ -1,21 +1,12 @@
 <template>
   <div class="detil">
-    <div class="banner">
-      <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1519262384,3498226215&fm=27&gp=0.jpg" />
-    </div>
     <div class="playerbox">
       <div class="player">
         <video ref="player"></video>
       </div>
       <div class="list clearfix">
-        <itemplay class="listli" v-for="json in videolist" :key="json.index" :json="json"></itemplay>
+        <itemplay @chageParent="childClick" class="listli" v-for="json in videolist" :key="json.index" :json="json"></itemplay>
       </div>
-    </div>
-    <div class="banner">
-      <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2106190320,4175870403&fm=27&gp=0.jpg" />
-    </div>
-    <div class="banner">
-      <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1519262384,3498226215&fm=27&gp=0.jpg" />
     </div>
   </div>
 </template>
@@ -25,16 +16,24 @@ export default {
   name: 'detilComponent',
   data () {
     return {
-      videolist: []
+      videolist: [],
+      player: ''
     }
   },
   mounted () {
-    let jsonstr = sessionStorage.getItem('detiljson')
-    if (jsonstr) {
-      this.videolist = JSON.parse(jsonstr)
-    } else {
-      let json = this.$route.params
-      console.log(json)
+    this.player = this.$refs.player
+    let obj = {
+      'vod_id': this.$route.query.vod_id
+    }
+    this.$http.post(this.URL.VIDEO_DETIL_URI, this.$qs.stringify(obj)).then((res) => {
+      let data = res.data
+      if (data.code === 1) {
+        this.parsesoure(data.data)
+      }
+    })
+  },
+  methods: {
+    parsesoure (json) {
       let array = json.vod_play_url.split('#')
       let videolist = []
       array.forEach((element, i) => {
@@ -48,25 +47,33 @@ export default {
         videolist.push(json)
       })
       this.videolist = videolist
-      sessionStorage.setItem('detiljson', JSON.stringify(videolist))
-    }
-
-    if (this.videolist.length) {
-      this.startplay(this.videolist[0])
-    }
-  },
-  methods: {
+      if (this.videolist.length) {
+        this.startplay(this.videolist[0])
+      }
+    },
     startplay (json) {
-      let player = this.$refs.player
-      player.src = json.play
-      player.play()
+      this.player.src = json.play
+      this.sourechange(json)
+      this.player.play()
+    },
+    childClick (json) {
+      this.player.src = json.play
+      this.sourechange(json)
+      this.player.load()
+    },
+    sourechange (json) {
+      let arr = this.videolist
+      arr.forEach((item) => {
+        item.isplay = false
+      })
+      json.isplay = true
+      console.log(json)
+      arr.splice(json.index, 1, json)
+      this.videolist = arr
     }
   },
   components: {
     itemplay
-  },
-  destroyed () {
-    sessionStorage.setItem('detiljson', '')
   }
 }
 </script>

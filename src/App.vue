@@ -15,6 +15,10 @@ html,body,#app{
   width: 100%;
   height: 100%;
 }
+#app{
+  max-width: 800px;
+  margin: 0 auto;
+}
 input,textarea {
   -webkit-user-select:auto;
   margin: 0px;

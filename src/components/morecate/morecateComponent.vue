@@ -1,7 +1,7 @@
 <template>
   <div id="box">
     <div class="itembox clearfix">
-      <div @click="gotofunc()" class="item" v-for="(json, key) in list" :key="key">
+      <div class="item" v-for="(json, key) in list" :key="key" @click="gotofunc(json)">
         <div class="itemicon">
           <van-icon class="icon" color="#1296db" size="30px" :name="json.icon" />
         </div>
@@ -18,78 +18,91 @@ export default {
   data () {
     return {
       list: [{
-        name: '动作',
+        name: '电影',
         icon: 'send-gift',
-        cate: 6
+        cate: 1,
+        gtype: 1
       }, {
-        name: '爱情',
+        name: '连续剧',
         icon: 'send-gift',
-        cate: 8
+        cate: 2,
+        gtype: 1
       }, {
-        name: '喜剧',
+        name: '综艺',
         icon: 'send-gift',
-        cate: 7
+        cate: 3,
+        gtype: 0
       }, {
-        name: '科幻',
+        name: '动漫',
         icon: 'send-gift',
-        cate: 9
+        cate: 4,
+        gtype: 0
       }, {
-        name: '剧情',
+        name: '动作片',
         icon: 'send-gift',
-        cate: 11
+        cate: 6,
+        gtype: 0
       }, {
-        name: '战争',
+        name: '喜剧片',
         icon: 'send-gift',
-        cate: 12
+        cate: 7,
+        gtype: 0
       }, {
-        name: '动画',
+        name: '爱情片',
         icon: 'send-gift',
-        cate: 24
+        cate: 8,
+        gtype: 0
       }, {
-        name: '恐怖',
+        name: '科幻片',
         icon: 'send-gift',
-        cate: 10
+        cate: 9,
+        gtype: 0
       }, {
-        name: '微电影',
+        name: '恐怖片',
         icon: 'send-gift',
-        cate: 25
+        cate: 10,
+        gtype: 0
+      }, {
+        name: '剧情片',
+        icon: 'send-gift',
+        cate: 11,
+        gtype: 0
+      }, {
+        name: '战争片',
+        icon: 'send-gift',
+        cate: 12,
+        gtype: 0
       }, {
         name: '国产剧',
         icon: 'send-gift',
-        cate: 13
+        cate: 13,
+        gtype: 0
       }, {
-        name: '香港剧',
+        name: '港台剧',
         icon: 'send-gift',
-        cate: 20
+        cate: 14,
+        gtype: 0
       }, {
-        name: '台湾剧',
+        name: '日韩剧',
         icon: 'send-gift',
-        cate: 21
-      }, {
-        name: '韩国剧',
-        icon: 'send-gift',
-        cate: 23
-      }, {
-        name: '日本剧',
-        icon: 'send-gift',
-        cate: 22
+        cate: 15,
+        gtype: 0
       }, {
         name: '欧美剧',
         icon: 'send-gift',
-        cate: 16
-      }, {
-        name: '海外剧',
-        icon: 'send-gift',
-        cate: 26
+        cate: 16,
+        gtype: 0
       }]
     }
   },
   methods: {
-    gotofunc () {
+    gotofunc (json) {
+      console.log(json)
       this.$router.push({
         path: 'cate',
         query: {
-          'type': 3
+          'type': json.cate,
+          'gtype': json.gtype
         }
       })
     }

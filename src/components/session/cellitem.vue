@@ -13,18 +13,9 @@ export default {
   methods: {
     gotofunc () {
       this.$router.push({
-        name: 'detilComponent',
-        params: {
-          'type_id': this.json.type_id,
-          'vod_actor': this.json.vod_actor,
-          'vod_area': this.json.vod_area,
-          'vod_blurb': this.json.vod_blurb,
-          'vod_id': this.json.vod_id,
-          'vod_name': this.json.vod_name,
-          'vod_pic': this.json.vod_pic,
-          'vod_play_url': this.json.vod_play_url,
-          'vod_remarks': this.json.vod_remarks,
-          'vod_tag': this.json.vod_tag
+        path: 'detil',
+        query: {
+          'vod_id': this.json.vod_id
         }
       })
     }

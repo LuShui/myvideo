@@ -1,7 +1,7 @@
 <template>
   <div class="list">
     <van-list class="clearfix vlist" v-model="loading" :finished="finished" @load="onLoad">
-      <itemcell class="cellitem" v-for="item in list" :key="item.vod_id" :json="item">
+      <itemcell class="cellitem" v-for="(item, index) in list" :key="index" :json="item">
         <!-- <div class="itembox">
           <div class="imgbox"></div>
           <div class="titlebox">我的妹妹不可能这么可爱</div>
@@ -26,7 +26,8 @@ export default {
     onLoad () {
       let obj = {
         'cate': this.$route.query.type,
-        'page': this.page
+        'page': this.page,
+        'type': this.$route.query.gtype
       }
       this.page++
       this.$http.post(this.URL.VIDEO_CATE_URI, this.$qs.stringify(obj)).then((res) => {

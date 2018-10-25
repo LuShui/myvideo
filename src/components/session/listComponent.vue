@@ -5,7 +5,7 @@
       <span>最近更新</span>
     </div>
     <van-list class="clearfix vlist" v-model="loading" :finished="finished" @load="onLoad">
-      <cellitem class="cellitem" v-for="item in hotlist" :json="item" :key="item.vod_id"></cellitem>
+      <cellitem class="cellitem" v-for="(item, index) in hotlist" :json="item" :key="index"></cellitem>
     </van-list>
   </div>
 </template>

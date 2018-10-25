@@ -16,7 +16,7 @@
       <div class="cateitem">
         <a class="abutton" @click="gotofunc(3)">
           <img src="@/assets/dianshiju_icon.svg" class="icon"/>
-          <span class="title">番剧</span>
+          <span class="title">连续剧</span>
         </a>
       </div>
       <div class="cateitem">
@@ -38,7 +38,8 @@ export default {
           this.$router.push({
             path: 'cate',
             query: {
-              'type': '6,7,8,9,10,11,12'
+              'type': '1',
+              'gtype': 1
             }
           })
           break
@@ -46,7 +47,8 @@ export default {
           this.$router.push({
             path: 'cate',
             query: {
-              'type': '24'
+              'type': '4',
+              'gtype': 0
             }
           })
           break
@@ -54,7 +56,8 @@ export default {
           this.$router.push({
             path: 'cate',
             query: {
-              'type': '13,16,17,18,19,20,21,22,23,24,25,26'
+              'type': '2',
+              'gtype': 1
             }
           })
           break

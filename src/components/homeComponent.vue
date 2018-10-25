@@ -3,7 +3,7 @@
     <headComponent />
     <swipeComponent :banner="banner" />
     <cateComponent />
-    <adComponent />
+    <!-- <adComponent /> -->
     <listComponent @moresoure="getmoresoure" :hotlist="hotlist" />
   </div>
 </template>
