@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -45,6 +46,15 @@ export default new Router({
       component: function (resolve) {
         require.ensure([], function (require) {
           resolve(require('@/components/noze/nozeComponent'))
+        })
+      }
+    },
+    {
+      path: '/search',
+      name: 'searchComponent',
+      component: function (resolve) {
+        require.ensure([], function (require) {
+          resolve(require('@/components/search/searchComponent'))
         })
       }
     }

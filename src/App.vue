@@ -18,6 +18,7 @@ html,body,#app{
 #app{
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
 }
 input,textarea {
   -webkit-user-select:auto;
